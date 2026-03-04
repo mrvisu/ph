@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# رابط خريطة الموقع
+Sitemap: https://mrvisu.github.io/ph/sitemap.xml
