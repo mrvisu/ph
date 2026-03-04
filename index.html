@@ -1,0 +1,1530 @@
+<!doctype html>
+<html lang="ar" dir="rtl" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mrakby Visuals - Photography &amp; Videography</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&amp;family=Playfair+Display:wght@400;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+        * { font-family: 'Tajawal', sans-serif; }
+        .brand-font { font-family: 'Playfair Display', serif; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(37, 211, 102, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(37, 211, 102, 0.8); }
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        .animate-slideIn { animation: slideIn 0.6s ease-out forwards; }
+        .animate-fadeInScale { animation: fadeInScale 0.4s ease-out forwards; }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .gradient-gold {
+            background: linear-gradient(135deg, #d4af37 0%, #f4e4bc 50%, #d4af37 100%);
+        }
+        
+        .text-gold {
+            background: linear-gradient(135deg, #d4af37, #f4e4bc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .slider-container {
+            overflow: hidden;
+        }
+        
+        .slider-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .slide {
+            min-width: 100%;
+            position: relative;
+        }
+        
+        .package-card {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .package-card:hover {
+            transform: translateY(-10px);
+            border-color: #d4af37;
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.2);
+        }
+        
+        .modal-overlay {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 1000;
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #d4af37;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .countdown-timer {
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+        }
+        
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: scale(1.1) translateY(-5px);
+        }
+        
+        .page { display: none; }
+        .page.active { display: block; }
+        
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .lightbox-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(5px);
+        }
+        
+        .lightbox-content {
+            position: relative;
+            z-index: 10;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.3);
+            animation: zoomIn 0.4s ease-out;
+        }
+        
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.7);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 11;
+        }
+        
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            aspect-ratio: 4/5;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .copy-notification {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #22c55e;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            z-index: 9999;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f0f1a; }
+        ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 4px; }
+    </style>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body class="h-full bg-[#0a0a12] text-white overflow-x-hidden">
+  <div id="app-container" class="h-full overflow-auto"><!-- Navigation -->
+   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 py-4">
+     <div class="glass-effect rounded-2xl px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi3bJGxAaT8r8z0dMUlU9Vn8NTjjo-k4Aez1RN2nyitwHrswCkywY3hbcuTiPXGjwoZGVd_oRKK2PfEmMZ0fhiFEbhi-VPuBce9Ro8AIW6bfB1vCrpF_DV06OpGuwRQjryJOtTEsulbwShyphenhyphena6eqQZ1RH5il8-TP1OwLLtbJhV9KbshVUFh8gWx0LcYGX5Q/w640-h640/Gemini_Generated_Image_larjc1larjc1larj.png" alt="Mrakby Visuals Logo" class="w-12 h-12 rounded-full object-cover border-2 border-[#d4af37]" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #d4af37, #f4e4bc)'; this.alt='MV';">
+       <div>
+        <h1 class="brand-font text-2xl font-bold text-gold" id="site-title">Mrakby Visuals</h1>
+        <p class="text-xs text-gray-400">Photography &amp; Videography</p>
+       </div>
+      </div>
+      <div class="hidden md:flex items-center gap-8"><a href="#" onclick="event.preventDefault(); showPage('home')" class="nav-link text-white hover:text-[#d4af37]">الرئيسية</a> <a href="#" onclick="event.preventDefault(); showPage('about')" class="nav-link text-white hover:text-[#d4af37]">من نحن</a> <a href="#" onclick="event.preventDefault(); showPage('gallery')" class="nav-link text-white hover:text-[#d4af37]">أعمالنا</a> <a href="#" onclick="event.preventDefault(); scrollToSection('packages')" class="nav-link text-white hover:text-[#d4af37]">الباقات</a> <a href="#" onclick="event.preventDefault(); scrollToSection('contact')" class="nav-link text-white hover:text-[#d4af37]">تواصل معنا</a>
+      </div>
+      <div class="flex items-center gap-3"><a href="tel:01097576073" class="hidden sm:flex items-center gap-2 bg-[#d4af37] text-black px-4 py-2 rounded-full font-bold hover:bg-[#f4e4bc] transition-all">
+        <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+        </svg> اتصل الآن </a> <button onclick="toggleMobileMenu()" class="md:hidden text-white p-2">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg></button>
+      </div>
+     </div>
+    </div><!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden glass-effect mx-4 mt-2 rounded-xl p-4">
+     <div class="flex flex-col gap-4"><a href="#" onclick="event.preventDefault(); showPage('home'); toggleMobileMenu();" class="text-white hover:text-[#d4af37] py-2">الرئيسية</a> <a href="#" onclick="event.preventDefault(); showPage('about'); toggleMobileMenu();" class="text-white hover:text-[#d4af37] py-2">من نحن</a> <a href="#" onclick="event.preventDefault(); showPage('gallery'); toggleMobileMenu();" class="text-white hover:text-[#d4af37] py-2">أعمالنا</a> <a href="#" onclick="event.preventDefault(); scrollToSection('packages'); toggleMobileMenu();" class="text-white hover:text-[#d4af37] py-2">الباقات</a> <a href="#" onclick="event.preventDefault(); scrollToSection('contact'); toggleMobileMenu();" class="text-white hover:text-[#d4af37] py-2">تواصل معنا</a> <a href="tel:01097576073" class="flex items-center justify-center gap-2 bg-[#d4af37] text-black px-4 py-3 rounded-full font-bold">
+       <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+       </svg> اتصل الآن </a>
+     </div>
+    </div>
+   </nav><!-- Home Page -->
+   <div id="homePage" class="page active"><!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-24 pb-16 px-4">
+     <div class="absolute inset-0 bg-gradient-to-br from-[#0a0a12] via-[#1a1a2e] to-[#0a0a12]"></div>
+     <div class="absolute inset-0 opacity-20">
+      <div class="absolute top-20 left-10 w-72 h-72 bg-[#d4af37] rounded-full filter blur-[100px]"></div>
+      <div class="absolute bottom-20 right-10 w-96 h-96 bg-purple-600 rounded-full filter blur-[120px]"></div>
+     </div>
+     <div class="relative z-10 text-center max-w-4xl mx-auto">
+      <div class="animate-float mb-8"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi3bJGxAaT8r8z0dMUlU9Vn8NTjjo-k4Aez1RN2nyitwHrswCkywY3hbcuTiPXGjwoZGVd_oRKK2PfEmMZ0fhiFEbhi-VPuBce9Ro8AIW6bfB1vCrpF_DV06OpGuwRQjryJOtTEsulbwShyphenhyphena6eqQZ1RH5il8-TP1OwLLtbJhV9KbshVUFh8gWx0LcYGX5Q/w640-h640/Gemini_Generated_Image_larjc1larjc1larj.png" alt="Mrakby Visuals" class="w-32 h-32 mx-auto rounded-full border-4 border-[#d4af37] shadow-2xl" loading="lazy" onerror="this.style.background='linear-gradient(135deg, #d4af37, #f4e4bc)'; this.alt='MV';">
+      </div>
+      <h1 class="brand-font text-5xl md:text-7xl font-bold mb-4"><span class="text-gold">Mrakby Visuals</span></h1>
+      <p class="text-xl md:text-2xl text-gray-300 mb-8" id="hero-description">نؤمن أن الصورة المثالية هي التي تجعلك تشعر باللحظة وكأنها تحدث الآن.<br>
+        متخصصون في توثيق أجمل ذكرياتكم</p>
+      <div class="flex flex-wrap justify-center gap-4"><a href="#booking" class="gradient-gold text-black px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:shadow-[#d4af37]/30 transition-all transform hover:scale-105"> 📅 احجز الآن </a> <button onclick="showPage('gallery')" class="glass-effect px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition-all"> 🎨 شاهد أعمالنا </button> <button onclick="openInquiryModal()" class="bg-purple-600 hover:bg-purple-700 px-8 py-4 rounded-full font-bold text-lg transition-all"> 📸 استفسر عن صور </button>
+      </div>
+     </div>
+    </section><!-- Slideshow Section -->
+    <section class="py-16 px-4 bg-gradient-to-b from-[#0a0a12] to-[#1a1a2e]">
+     <div class="max-w-6xl mx-auto">
+      <div class="relative rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#1a1a2e] to-[#0f0f1a] border border-gray-800 h-[500px] group">
+       <div class="slider-container relative w-full h-full overflow-hidden cursor-pointer group" onclick="navigateToGallery()">
+        <div id="slideshowTrack" class="slider-track w-full h-full transition-transform duration-500 ease-in-out">
+         <!-- Slides will be inserted here by JavaScript -->
+        </div>
+        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+         <div class="bg-white/90 backdrop-blur-sm px-8 py-4 rounded-full font-bold text-black text-lg">
+          👈 اضغط لعرض أعمالنا الكاملة
+         </div>
+        </div>
+       </div><!-- Navigation Buttons --> <button onclick="prevSlide()" class="absolute left-6 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/80 text-white p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform hover:scale-110">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg></button> <button onclick="nextSlide()" class="absolute right-6 top-1/2 -translate-y-1/2 z-20 bg-black/50 hover:bg-black/80 text-white p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform hover:scale-110">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg></button> <!-- Dots Navigation -->
+       <div id="slideDots" class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2 flex-wrap justify-center px-4">
+        <!-- Dots will be inserted here by JavaScript -->
+       </div>
+      </div>
+     </div>
+    </section><!-- Packages Section -->
+    <section id="packages" class="py-20 px-4 bg-gradient-to-b from-[#1a1a2e] to-[#0a0a12]">
+     <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+       <h2 class="text-4xl md:text-5xl font-bold text-gold mb-4 brand-font">الباقات والعروض</h2>
+       <p class="text-gray-400 text-xl">اختر الباقة المناسبة لمناسبتك</p>
+      </div><!-- Packages Grid --> <!-- Packages Grid --> <!-- Blurred Packages Section with Overlay -->
+      <div class="relative">
+       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 blur-sm opacity-50 pointer-events-none"><!-- Basic Package -->
+        <div class="package-card rounded-3xl p-8 hover:shadow-2xl hover:shadow-[#d4af37]/30 transition-all">
+         <div class="text-5xl mb-4">
+          📸
+         </div>
+         <h3 class="text-2xl font-bold text-white mb-2">الباقة الأساسية</h3>
+         <p class="text-[#d4af37] text-3xl font-bold mb-6">اتصل للاستفسار</p>
+         <ul class="space-y-3 mb-8 text-gray-300">
+          <li class="flex items-start gap-3"><span class="text-[#d4af37] mt-1">✓</span>
+           <div>
+            4 ساعات تصوير
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-[#d4af37] mt-1">✓</span>
+           <div>
+            100+ صورة بدقة عالية
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-[#d4af37] mt-1">✓</span>
+           <div>
+            تحرير احترافي
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-[#d4af37] mt-1">✓</span>
+           <div>
+            نسخة رقمية عالية الدقة
+           </div></li>
+         </ul><button onclick="inquireAboutOffers()" class="w-full bg-[#d4af37] hover:bg-[#f4e4bc] text-black px-6 py-3 rounded-full font-bold transition-all">احجز الآن</button>
+        </div><!-- Premium Package -->
+        <div class="package-card rounded-3xl p-8 hover:shadow-2xl hover:shadow-purple-600/30 transition-all border-2 border-purple-600 relative">
+         <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-600 to-pink-600 px-4 py-1 rounded-full"><span class="text-white font-bold text-sm">الأفضل</span>
+         </div>
+         <div class="text-5xl mb-4">
+          ✨
+         </div>
+         <h3 class="text-2xl font-bold text-white mb-2">الباقة الفاخرة</h3>
+         <p class="text-purple-400 text-3xl font-bold mb-6">اتصل للاستفسار</p>
+         <ul class="space-y-3 mb-8 text-gray-300">
+          <li class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span>
+           <div>
+            8 ساعات تصوير
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span>
+           <div>
+            250+ صورة بدقة عالية
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span>
+           <div>
+            فيديو سينمائي 2 دقيقة
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span>
+           <div>
+            ألبوم احترافي مطبوع
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-purple-400 mt-1">✓</span>
+           <div>
+            جلسة أولية استشارة مجانية
+           </div></li>
+         </ul><button onclick="inquireAboutOffers()" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-3 rounded-full font-bold transition-all">احجز الآن</button>
+        </div><!-- VIP Package -->
+        <div class="package-card rounded-3xl p-8 hover:shadow-2xl hover:shadow-amber-600/30 transition-all">
+         <div class="text-5xl mb-4">
+          👑
+         </div>
+         <h3 class="text-2xl font-bold text-white mb-2">الباقة الملكية</h3>
+         <p class="text-amber-400 text-3xl font-bold mb-6">اتصل للاستفسار</p>
+         <ul class="space-y-3 mb-8 text-gray-300">
+          <li class="flex items-start gap-3"><span class="text-amber-400 mt-1">✓</span>
+           <div>
+            12 ساعة تصوير كامل
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-amber-400 mt-1">✓</span>
+           <div>
+            500+ صورة محررة احترافياً
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-amber-400 mt-1">✓</span>
+           <div>
+            فيديو سينمائي 5 دقائق
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-amber-400 mt-1">✓</span>
+           <div>
+            2 مصور احترافي
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-amber-400 mt-1">✓</span>
+           <div>
+            مقدمة فيديو احترافية + ألبوم
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-amber-400 mt-1">✓</span>
+           <div>
+            فلاشات إضافية مجاني
+           </div></li>
+         </ul><button onclick="inquireAboutOffers()" class="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white px-6 py-3 rounded-full font-bold transition-all">احجز الآن</button>
+        </div><!-- Professional Plus Package -->
+        <div class="package-card rounded-3xl p-8 hover:shadow-2xl hover:shadow-cyan-600/30 transition-all border-2 border-cyan-500 relative">
+         <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-1 rounded-full"><span class="text-white font-bold text-sm">عرض خاص</span>
+         </div>
+         <div class="text-5xl mb-4">
+          💎
+         </div>
+         <h3 class="text-2xl font-bold text-white mb-2">باقة بروفيشنال بلس</h3>
+         <p class="text-cyan-400 text-3xl font-bold mb-6">اتصل للاستفسار</p>
+         <ul class="space-y-3 mb-8 text-gray-300">
+          <li class="flex items-start gap-3"><span class="text-cyan-400 mt-1">✓</span>
+           <div>
+            16 ساعة تصوير متكامل
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-cyan-400 mt-1">✓</span>
+           <div>
+            1000+ صورة محررة احترافياً
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-cyan-400 mt-1">✓</span>
+           <div>
+            3 فيديوهات سينمائية 10 دقائق
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-cyan-400 mt-1">✓</span>
+           <div>
+            3 مصورين احترافيين + 1 مشرف
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-cyan-400 mt-1">✓</span>
+           <div>
+            ألبوم فاخر مطبوع + فلاشة USB
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-cyan-400 mt-1">✓</span>
+           <div>
+            مقدمات فيديو احترافية متعددة
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-cyan-400 mt-1">✓</span>
+           <div>
+            استشارة مجانية وخطة تصوير مخصصة
+           </div></li>
+          <li class="flex items-start gap-3"><span class="text-cyan-400 mt-1">✓</span>
+           <div>
+            دعم فني 24/7 بعد الحدث
+           </div></li>
+         </ul><button onclick="inquireAboutOffers()" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-6 py-3 rounded-full font-bold transition-all">احجز الآن</button>
+        </div>
+       </div><!-- Pricing Update Overlay -->
+       <div class="absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm rounded-3xl">
+        <div class="text-center px-6">
+         <div class="text-6xl mb-4">
+          ⏳
+         </div>
+         <h3 class="text-3xl font-bold text-gold mb-4">جاري تحديث الأسعار</h3>
+         <p class="text-gray-300 text-lg mb-8">نعمل على تحديث الأسعار والعروض الخاصة بنا<br>
+          للحصول على أفضل الخدمات</p><a href="https://wa.me/201201260040?text=مرحباً%2C%20أريد%20معرفة%20آخر%20الأسعار%20والعروض%20المتاحة" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-all transform hover:scale-105">
+          <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+          </svg> تواصل معنا الآن </a>
+        </div>
+       </div>
+      </div><!-- Add-ons Section -->
+      <div class="mt-16 bg-gradient-to-r from-blue-900/30 to-cyan-900/30 rounded-3xl p-8 border border-blue-500/30">
+       <h4 class="text-2xl font-bold text-blue-300 mb-8 text-center">✨ إضافات اختيارية</h4>
+       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="text-center p-4 bg-blue-600/20 rounded-xl border border-blue-500/30">
+         <div class="text-3xl mb-2">
+          🎬
+         </div>
+         <p class="text-white font-bold mb-1">فيديو إضافي</p>
+         <p class="text-blue-300">قريباً</p>
+        </div>
+        <div class="text-center p-4 bg-blue-600/20 rounded-xl border border-blue-500/30">
+         <div class="text-3xl mb-2">
+          📸
+         </div>
+         <p class="text-white font-bold mb-1">صور إضافية</p>
+         <p class="text-blue-300">قريباً</p>
+        </div>
+        <div class="text-center p-4 bg-blue-600/20 rounded-xl border border-blue-500/30">
+         <div class="text-3xl mb-2">
+          🚗
+         </div>
+         <p class="text-white font-bold mb-1"><span class="ar-text">انتقالات</span> <span class="en-text hidden">Transportation</span></p>
+         <p class="text-blue-300"><span class="ar-text">قريباً</span> <span class="en-text hidden">Coming Soon</span></p>
+        </div>
+        <div class="text-center p-4 bg-blue-600/20 rounded-xl border border-blue-500/30">
+         <div class="text-3xl mb-2">
+          👥
+         </div>
+         <p class="text-white font-bold mb-1"><span class="ar-text">مساعد تصوير</span> <span class="en-text hidden">Photography Assistant</span></p>
+         <p class="text-blue-300"><span class="ar-text">قريباً</span> <span class="en-text hidden">Coming Soon</span></p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section><!-- Booking Form Section -->
+    <section id="booking" class="py-20 px-4 bg-[#0a0a12]">
+     <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-12">
+       <h2 class="text-4xl md:text-5xl font-bold text-gold mb-4"><span class="ar-text">📝 احجز الآن</span> <span class="en-text hidden">📝 Book Now</span></h2>
+       <p class="text-gray-400 text-xl"><span class="ar-text">املأ البيانات وسنتواصل معك في أقرب وقت</span> <span class="en-text hidden">Fill in your details and we'll contact you soon</span></p>
+      </div>
+      <form id="bookingForm" class="bg-[#1a1a2e] rounded-3xl p-8 space-y-6">
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div><label class="block text-[#d4af37] mb-2 font-bold">🤵 اسم العريس *</label> <input type="text" id="groomName" required class="w-full bg-[#0a0a12] border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-[#d4af37] transition-all" placeholder="أدخل اسم العريس">
+        </div>
+        <div><label class="block text-[#d4af37] mb-2 font-bold">👰 اسم العروسة *</label> <input type="text" id="brideName" required class="w-full bg-[#0a0a12] border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-[#d4af37] transition-all" placeholder="أدخل اسم العروسة">
+        </div>
+       </div>
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div><label class="block text-[#d4af37] mb-2 font-bold">📅 تاريخ المناسبة *</label> <input type="date" id="eventDate" required class="w-full bg-[#0a0a12] border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-[#d4af37] transition-all">
+        </div>
+        <div><label class="block text-[#d4af37] mb-2 font-bold">📱 رقم الهاتف *</label> <input type="tel" id="phone" required class="w-full bg-[#0a0a12] border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-[#d4af37] transition-all" placeholder="01xxxxxxxxx">
+        </div>
+       </div>
+       <div><label class="block text-[#d4af37] mb-2 font-bold">📍 العنوان</label> <input type="text" id="address" class="w-full bg-[#0a0a12] border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-[#d4af37] transition-all" placeholder="أدخل العنوان">
+       </div>
+       <div><label class="block text-[#d4af37] mb-2 font-bold">☎️ رقم هاتف إضافي</label> <input type="tel" id="extraPhone" class="w-full bg-[#0a0a12] border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-[#d4af37] transition-all" placeholder="رقم احتياطي (اختياري)">
+       </div>
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div><label class="block text-[#d4af37] mb-2 font-bold">🎯 نوع الحجز *</label> <select id="bookingType" required class="w-full bg-[#0a0a12] border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-[#d4af37] transition-all"> <option value="">اختر نوع الحجز</option> <option value="تصوير سيشن زفاف">💒 تصوير سيشن زفاف</option> <option value="تصوير سيشن حنه">🎉 تصوير سيشن حنة</option> <option value="تصوير سيشن خطوبه">💍 تصوير سيشن خطوبة</option> <option value="تصوير قاعه">🏛️ تصوير قاعة</option> <option value="تصوير كتب كتاب">📜 تصوير كتب كتاب</option> <option value="تصوير عيد ميلاد">🎂 تصوير عيد ميلاد</option> <option value="سيشن خارج المنصور">🚗 سيشن خارج المنصور (+500 جنيه انتقالات)</option> </select>
+        </div>
+        <div><label class="block text-[#d4af37] mb-2 font-bold">🏛️ اسم القاعة أو الكافيه</label> <input type="text" id="venueName" class="w-full bg-[#0a0a12] border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-[#d4af37] transition-all" placeholder="أدخل اسم القاعة أو الكافيه">
+        </div>
+       </div>
+       <div><label class="block text-[#d4af37] mb-2 font-bold">💬 ملاحظاتك (اختياري)</label> <textarea id="notes" class="w-full bg-[#0a0a12] border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-[#d4af37] transition-all resize-none" rows="3" placeholder="أخبرنا عن أي متطلبات خاصة أو ملاحظات..."></textarea>
+       </div>
+       <div><label class="block text-[#d4af37] mb-2 font-bold">📍 اختر لوكيشن التصوير</label> <select id="locationSelect" class="w-full bg-[#0a0a12] border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-[#d4af37] transition-all"> <option value="">اختر الموقع</option> <option value="studio">🏠 الاستوديو</option> <option value="amazon">🌴 أمازون</option> <option value="greenisland">🏝️ جرين أي لاند</option> <option value="wave">🌊 ويف</option> <option value="vibes">✨ فايبس</option> <option value="home">🏡 في المنزل</option> </select>
+        <div id="locationLinks" class="mt-3 hidden"><a id="locationLink" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-[#d4af37] hover:text-[#f4e4bc] transition-all">
+          <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+          </svg> عرض الموقع على الخريطة </a>
+        </div>
+        <div id="homeLocationPicker" class="mt-3 hidden"><button type="button" onclick="openMapPicker()" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl transition-all">
+          <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+          </svg> حدد موقعك على الخريطة </button> <input type="hidden" id="homeLocation">
+        </div>
+       </div><button type="submit" id="submitBtn" class="w-full gradient-gold text-black py-4 rounded-full font-bold text-xl hover:shadow-2xl hover:shadow-[#d4af37]/30 transition-all transform hover:scale-[1.02]"> ✨ تأكيد الحجز </button>
+      </form>
+      <div id="formMessage" class="hidden mt-6 p-4 rounded-xl text-center"></div>
+     </div>
+    </section><!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 bg-gradient-to-b from-[#1a1a2e] to-[#0a0a12]">
+     <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-16">
+       <h2 class="text-4xl md:text-5xl font-bold text-gold mb-4">تواصل معنا</h2>
+       <p class="text-gray-400 text-xl">نحن هنا لمساعدتك في كل خطوة</p>
+      </div><!-- Main Contact Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"><a href="https://wa.me/201201260040" target="_blank" rel="noopener noreferrer" class="social-icon bg-gradient-to-br from-green-600 to-green-800 rounded-2xl p-6 text-center hover:shadow-2xl hover:shadow-green-500/30 transition-all">
+        <div class="text-5xl mb-4">
+         💬
+        </div><h3 class="text-xl font-bold text-white mb-2">WhatsApp</h3><p class="text-green-200">01201260040</p><p class="text-sm text-green-300 mt-2">تواصل فوري</p></a> <a href="mailto:Mrakbyph@outlook.com" target="_blank" rel="noopener noreferrer" class="social-icon bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-6 text-center hover:shadow-2xl hover:shadow-blue-500/30 transition-all">
+        <div class="text-5xl mb-4">
+         📧
+        </div><h3 class="text-xl font-bold text-white mb-2">Email</h3><p class="text-blue-200">Mrakbyph@outlook.com</p><p class="text-sm text-blue-300 mt-2">راسلنا في أي وقت</p></a> <a href="tel:01097576073" class="social-icon bg-gradient-to-br from-purple-600 to-purple-800 rounded-2xl p-6 text-center hover:shadow-2xl hover:shadow-purple-500/30 transition-all">
+        <div class="text-5xl mb-4">
+         📞
+        </div><h3 class="text-xl font-bold text-white mb-2">Phone</h3><p class="text-purple-200">01097576073</p><p class="text-sm text-purple-300 mt-2">اتصل مباشرة</p></a>
+      </div><!-- Social Media Links -->
+      <div class="text-center mb-8">
+       <h3 class="text-2xl font-bold text-white mb-6">تابعنا على السوشيال ميديا</h3>
+       <div class="flex flex-wrap justify-center gap-4"><a href="https://www.facebook.com/MrakbyPh" target="_blank" rel="noopener noreferrer" class="social-icon flex items-center gap-3 bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-xl transition-all">
+         <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+         </svg><span class="font-bold">Facebook</span> </a> <a href="https://www.instagram.com/mrakbyph" target="_blank" rel="noopener noreferrer" class="social-icon flex items-center gap-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 px-6 py-3 rounded-xl transition-all">
+         <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+         </svg><span class="font-bold">Instagram</span> </a> <a href="https://www.tiktok.com/@mrakbyvisuals" target="_blank" rel="noopener noreferrer" class="social-icon flex items-center gap-3 bg-black hover:bg-gray-900 px-6 py-3 rounded-xl border border-white/20 transition-all">
+         <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
+         </svg><span class="font-bold">TikTok</span> </a> <a href="https://www.youtube.com/@MrakbyVisuals" target="_blank" rel="noopener noreferrer" class="social-icon flex items-center gap-3 bg-red-600 hover:bg-red-700 px-6 py-3 rounded-xl transition-all">
+         <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+         </svg><span class="font-bold">YouTube</span> </a> <a href="https://get-tap.app/mrakbyst" target="_blank" rel="noopener noreferrer" class="social-icon flex items-center gap-3 bg-[#d4af37] hover:bg-[#f4e4bc] text-black px-6 py-3 rounded-xl transition-all">
+         <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+         </svg><span class="font-bold">Website</span> </a>
+       </div>
+      </div><!-- Payment Methods -->
+      <div class="mt-16">
+       <h3 class="text-2xl font-bold text-center text-white mb-8">💳 طرق الدفع الإلكتروني</h3>
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto"><a href="https://ipn.eg/S/mrakbybm/instapay/2Uy6jm" target="_blank" rel="noopener noreferrer" class="social-icon bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl p-6 text-center hover:shadow-2xl transition-all">
+         <div class="text-4xl mb-2">
+          💰
+         </div><h4 class="text-xl font-bold text-white">InstaPay</h4><p class="text-orange-100 text-sm mt-2">ادفع الآن</p></a> <button onclick="copyVodafoneNumber()" class="social-icon bg-gradient-to-r from-red-600 to-red-800 rounded-2xl p-6 text-center hover:shadow-2xl transition-all">
+         <div class="text-4xl mb-2">
+          📱
+         </div><h4 class="text-xl font-bold text-white">Vodafone Cash</h4><p class="text-red-100 text-sm mt-2">انسخ الرقم: 01126810107</p></button>
+       </div>
+      </div>
+     </div>
+    </section><!-- Footer -->
+    <footer class="py-8 px-4 bg-[#0a0a12] border-t border-gray-800">
+     <div class="max-w-5xl mx-auto text-center">
+      <p class="text-gray-400">© 2024 Mrakby Visuals - جميع الحقوق محفوظة</p>
+     </div>
+    </footer>
+   </div><!-- About Page -->
+   <div id="aboutPage" class="page">
+    <div class="min-h-screen pt-28 pb-16 px-4 bg-[#0a0a12]">
+     <div class="max-w-5xl mx-auto"><!-- Hero Section -->
+      <div class="text-center mb-20 animate-slideIn">
+       <h1 class="text-5xl md:text-6xl font-bold text-gold mb-6 brand-font">من نحن؟</h1>
+       <p class="text-2xl text-gray-300 leading-relaxed">نحن لا نقتصر على توثيق المشهد، بل نعيد صياغة الواقع بعدسة فنية</p>
+      </div><!-- Vision & Mission Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20"><!-- Vision -->
+       <div class="bg-gradient-to-br from-[#1a1a2e] to-[#0f0f1a] rounded-3xl p-8 border border-[#d4af37]/30 hover:border-[#d4af37] transition-all">
+        <div class="text-5xl mb-4">
+         🎯
+        </div>
+        <h3 class="text-3xl font-bold text-gold mb-4 brand-font">رؤيتنا</h3>
+        <p class="text-gray-300 text-lg leading-relaxed">في Mrakby Visuals، نؤمن أن خلف كل كادر قصة، وخلف كل لقطة هوية تستحق الخلود. نسعى لتحويل لحظاتك إلى فن بصري يخطف الأنظار ويترك أثراً في القلوب.</p>
+       </div><!-- Mission -->
+       <div class="bg-gradient-to-br from-[#1a1a2e] to-[#0f0f1a] rounded-3xl p-8 border border-purple-500/30 hover:border-purple-500 transition-all">
+        <div class="text-5xl mb-4">
+         ✨
+        </div>
+        <h3 class="text-3xl font-bold text-purple-400 mb-4 brand-font">مهمتنا</h3>
+        <p class="text-gray-300 text-lg leading-relaxed">تقديم تجربة بصرية تدمج بين دقة التصوير الفوتوغرافي وقوة الإنتاج المرئي، لنمنح الأفراد والعلامات التجارية حضوراً لا يُنسى يتجاوز التوقعات.</p>
+       </div>
+      </div><!-- Core Values -->
+      <div class="mb-20">
+       <h2 class="text-4xl font-bold text-center text-gold mb-12 brand-font">قيمنا الأساسية</h2>
+       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"><!-- Creativity -->
+        <div class="bg-gradient-to-br from-orange-600/20 to-red-600/20 rounded-2xl p-6 border border-orange-500/30 text-center hover:border-orange-500 transition-all">
+         <div class="text-4xl mb-4">
+          🎨
+         </div>
+         <h4 class="text-xl font-bold text-orange-300 mb-3">الإبداع</h4>
+         <p class="text-gray-300 text-sm">كسر القواعد التقليدية لإنتاج صور وفيديوهات ملهمة تحكي قصصاً فريدة.</p>
+        </div><!-- Precision -->
+        <div class="bg-gradient-to-br from-blue-600/20 to-cyan-600/20 rounded-2xl p-6 border border-blue-500/30 text-center hover:border-blue-500 transition-all">
+         <div class="text-4xl mb-4">
+          🎯
+         </div>
+         <h4 class="text-xl font-bold text-blue-300 mb-3">الدقة</h4>
+         <p class="text-gray-300 text-sm">الاهتمام بأصغر التفاصيل، من الإضاءة وحتى اللمسات الأخيرة في المونتاج.</p>
+        </div><!-- Passion -->
+        <div class="bg-gradient-to-br from-pink-600/20 to-purple-600/20 rounded-2xl p-6 border border-pink-500/30 text-center hover:border-pink-500 transition-all">
+         <div class="text-4xl mb-4">
+          ❤️
+         </div>
+         <h4 class="text-xl font-bold text-pink-300 mb-3">الشغف</h4>
+         <p class="text-gray-300 text-sm">المحرك الذي يجعل من كل مشروع قصة نجاح فريدة ملهمة.</p>
+        </div><!-- Impact -->
+        <div class="bg-gradient-to-br from-green-600/20 to-emerald-600/20 rounded-2xl p-6 border border-green-500/30 text-center hover:border-green-500 transition-all">
+         <div class="text-4xl mb-4">
+          ⚡
+         </div>
+         <h4 class="text-xl font-bold text-green-300 mb-3">التأثير</h4>
+         <p class="text-gray-300 text-sm">صنع أثر بصري دائم يتجاوز الزمن ويرسم هوية قوية ومميزة.</p>
+        </div>
+       </div>
+      </div><!-- Why Us Section -->
+      <div class="bg-gradient-to-br from-[#1a1a2e] to-[#0f0f1a] rounded-3xl p-12 border border-[#d4af37]/30 mb-20">
+       <h2 class="text-4xl font-bold text-center text-gold mb-6 brand-font">لماذا نحن؟</h2>
+       <div class="flex items-center justify-center mb-6">
+        <div class="h-1 w-20 bg-gradient-to-r from-[#d4af37] to-purple-600"></div>
+       </div>
+       <p class="text-center text-xl text-gray-300 leading-relaxed mb-8">في Mrakby Visuals لا نصنع محتوى، نحن نصنع أثراً بصرياً.</p>
+       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center">
+         <div class="text-4xl mb-3">
+          💻
+         </div>
+         <h4 class="text-xl font-bold text-white mb-2">تقنيات حديثة</h4>
+         <p class="text-gray-400">أحدث المعدات والتقنيات لضمان أفضل جودة</p>
+        </div>
+        <div class="text-center">
+         <div class="text-4xl mb-3">
+          🎬
+         </div>
+         <h4 class="text-xl font-bold text-white mb-2">معالجة فنية دقيقة</h4>
+         <p class="text-gray-400">كل صورة وفيديو يُعالج باحترافية عالية</p>
+        </div>
+        <div class="text-center">
+         <div class="text-4xl mb-3">
+          💡
+         </div>
+         <h4 class="text-xl font-bold text-white mb-2">رؤية إبداعية مخصصة</h4>
+         <p class="text-gray-400">حل فريد مصمم خصيصاً لكل عميل</p>
+        </div>
+       </div>
+      </div><!-- Services Section -->
+      <div class="mb-20">
+       <h2 class="text-4xl font-bold text-center text-gold mb-12 brand-font">خدماتنا</h2>
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-8"><!-- Events -->
+        <div class="bg-gradient-to-br from-[#1a1a2e] to-[#0f0f1a] rounded-2xl p-8 border border-pink-500/30 hover:border-pink-500 transition-all group">
+         <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">
+          🎉
+         </div>
+         <h4 class="text-2xl font-bold text-pink-400 mb-3">توثيق المناسبات</h4>
+         <p class="text-gray-300">نخلد اللحظات العفوية والمشاعر الصادقة في حفلاتكم بلمسة سينمائية احترافية.</p>
+        </div><!-- Portraits -->
+        <div class="bg-gradient-to-br from-[#1a1a2e] to-[#0f0f1a] rounded-2xl p-8 border border-blue-500/30 hover:border-blue-500 transition-all group">
+         <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">
+          📷
+         </div>
+         <h4 class="text-2xl font-bold text-blue-400 mb-3">البورتريه الاحترافي</h4>
+         <p class="text-gray-300">جلسات تصوير تبرز هويتك الشخصية والمهنية بأعلى دقة بصرية.</p>
+        </div><!-- Videography -->
+        <div class="bg-gradient-to-br from-[#1a1a2e] to-[#0f0f1a] rounded-2xl p-8 border border-red-500/30 hover:border-red-500 transition-all group">
+         <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">
+          🎬
+         </div>
+         <h4 class="text-2xl font-bold text-red-400 mb-3">الإنتاج المرئي</h4>
+         <p class="text-gray-300">صناعة محتوى فيديو وريلز إبداعي يخطف الأنظار بأسلوب إخراجي فريد.</p>
+        </div><!-- Commercial -->
+        <div class="bg-gradient-to-br from-[#1a1a2e] to-[#0f0f1a] rounded-2xl p-8 border border-amber-500/30 hover:border-amber-500 transition-all group">
+         <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">
+          🏢
+         </div>
+         <h4 class="text-2xl font-bold text-amber-400 mb-3">التصوير التجاري</h4>
+         <p class="text-gray-300">إبراز تفاصيل منتجاتك وعلامتك التجارية بصور ترفع قيمتها السوقية.</p>
+        </div>
+       </div>
+      </div><!-- Message to Clients -->
+      <div class="bg-gradient-to-r from-[#d4af37]/20 to-purple-600/20 rounded-3xl p-12 border border-[#d4af37]/50 text-center">
+       <div class="text-6xl mb-6">
+        💌
+       </div>
+       <h3 class="text-3xl font-bold text-gold mb-6 brand-font">رسالتنا لعملائنا</h3>
+       <p class="text-lg text-gray-300 leading-relaxed mb-8">ثقتكم هي محركنا الأساسي للإبداع. سواء كانت مناسبة خاصة، بورتريه شخصي، أو مشروعاً تجارياً، نحن هنا لنجعل رؤيتكم واقعاً مرئياً مبهراً يتجاوز التوقعات.</p><button onclick="scrollToContactOnHome()" class="gradient-gold text-black px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl hover:shadow-[#d4af37]/30 transition-all transform hover:scale-105"> جاهز لتحويل رؤيتك إلى واقع؟ </button>
+      </div>
+     </div>
+    </div>
+   </div><!-- Gallery Page -->
+   <div id="galleryPage" class="page">
+    <div class="pt-28 pb-16 px-4 bg-[#0a0a12]">
+     <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12">
+       <h2 class="text-4xl md:text-5xl font-bold text-gold mb-4">🎨 معرض أعمالنا</h2>
+       <p class="text-gray-400 text-xl">اختر الفئة لاستعراض الأعمال</p>
+      </div><!-- Category Navigation Controls -->
+      <div class="flex items-center justify-center gap-4 md:gap-6 mb-12"><button onclick="previousCategory()" class="hidden md:flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-[#d4af37] to-[#f4e4bc] text-black hover:shadow-lg hover:shadow-[#d4af37]/50 transition-all transform hover:scale-110 active:scale-95">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+        </svg></button> <!-- Gallery Categories -->
+       <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4"><button onclick="showGalleryCategory('wedding')" class="gallery-category-btn bg-gradient-to-br from-[#d4af37]/20 to-amber-900/20 border-2 border-[#d4af37]/50 rounded-2xl p-6 md:p-8 text-center hover:border-[#d4af37] hover:bg-[#d4af37]/10 transition-all">
+         <div class="text-4xl md:text-5xl mb-2 md:mb-4">
+          👰
+         </div><h3 class="text-lg md:text-xl font-bold text-white"><span class="ar-text">سيشن الزفاف</span> <span class="en-text hidden">Wedding Session</span></h3></button> <button onclick="showGalleryCategory('engagement')" class="gallery-category-btn bg-gradient-to-br from-pink-600/20 to-purple-600/20 border-2 border-pink-500/50 rounded-2xl p-6 md:p-8 text-center hover:border-pink-500 hover:bg-pink-500/10 transition-all">
+         <div class="text-4xl md:text-5xl mb-2 md:mb-4">
+          💍
+         </div><h3 class="text-lg md:text-xl font-bold text-white"><span class="ar-text">سيشن الخطوبة</span> <span class="en-text hidden">Engagement Session</span></h3></button> <button onclick="showGalleryCategory('casual')" class="gallery-category-btn bg-gradient-to-br from-blue-600/20 to-cyan-600/20 border-2 border-blue-500/50 rounded-2xl p-6 md:p-8 text-center hover:border-blue-500 hover:bg-blue-500/10 transition-all">
+         <div class="text-4xl md:text-5xl mb-2 md:mb-4">
+          📷
+         </div><h3 class="text-lg md:text-xl font-bold text-white"><span class="ar-text">سيشن كاجوال</span> <span class="en-text hidden">Casual Session</span></h3></button> <button onclick="showGalleryCategory('videos')" class="gallery-category-btn bg-gradient-to-br from-red-600/20 to-orange-600/20 border-2 border-red-500/50 rounded-2xl p-6 md:p-8 text-center hover:border-red-500 hover:bg-red-500/10 transition-all">
+         <div class="text-4xl md:text-5xl mb-2 md:mb-4">
+          🎬
+         </div><h3 class="text-lg md:text-xl font-bold text-white"><span class="ar-text">الفيديوهات</span> <span class="en-text hidden">Videos</span></h3></button>
+       </div><button onclick="nextCategory()" class="hidden md:flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-[#d4af37] to-[#f4e4bc] text-black hover:shadow-lg hover:shadow-[#d4af37]/50 transition-all transform hover:scale-110 active:scale-95">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
+        </svg></button>
+      </div><!-- Gallery Content -->
+      <div id="galleryContent" class="hidden animate-fadeInScale">
+       <div id="galleryTitle" class="text-center mb-8">
+        <h3 class="text-3xl font-bold text-gold"></h3>
+       </div>
+       <div id="galleryGrid" class="gallery-grid"></div>
+      </div><!-- Videos Section -->
+      <div id="videosContent" class="hidden animate-fadeInScale">
+       <div class="text-center mb-8">
+        <h3 class="text-3xl font-bold text-gold mb-4">🎬 فيديوهاتنا</h3>
+        <p class="text-gray-400">شاهد أعمالنا على منصات التواصل</p>
+       </div>
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-8"><a href="https://www.facebook.com/MrakbyPh/reels/" target="_blank" rel="noopener noreferrer" class="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-8 text-center hover:shadow-2xl hover:shadow-blue-500/30 transition-all transform hover:scale-105">
+         <div class="text-6xl mb-4">
+          📘
+         </div><h4 class="text-2xl font-bold text-white mb-2">فيديوهات فيسبوك</h4><p class="text-blue-200">شاهد أحدث الريلز</p></a> <a href="https://www.youtube.com/@MrakbyVisuals/videos" target="_blank" rel="noopener noreferrer" class="bg-gradient-to-br from-red-600 to-red-800 rounded-2xl p-8 text-center hover:shadow-2xl hover:shadow-red-500/30 transition-all transform hover:scale-105">
+         <div class="text-6xl mb-4">
+          ▶️
+         </div><h4 class="text-2xl font-bold text-white mb-2">قناة يوتيوب</h4><p class="text-red-200">شاهد جميع الفيديوهات</p></a>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- WhatsApp Floating Button -->
+   <div class="whatsapp-btn">
+    <button onclick="openWhatsAppModal()" class="animate-pulse-glow bg-green-500 hover:bg-green-600 w-16 h-16 rounded-full flex items-center justify-center shadow-2xl transition-all transform hover:scale-110">
+     <svg class="w-8 h-8 text-white" fill="currentColor" viewbox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+     </svg></button>
+   </div><!-- WhatsApp Modal -->
+   <div id="whatsappModal" class="hidden fixed inset-0 z-[9999] flex items-center justify-center p-4">
+    <div class="modal-overlay absolute inset-0" onclick="closeWhatsAppModal()"></div>
+    <div class="relative bg-gradient-to-br from-[#1a1a2e] to-[#0f0f1a] rounded-3xl p-8 max-w-md w-full animate-fadeInScale border border-[#d4af37]/30">
+     <button onclick="closeWhatsAppModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg></button>
+     <div class="text-center">
+      <div class="text-6xl mb-4">
+       🌟
+      </div>
+      <h3 class="text-2xl font-bold text-gold mb-2">انضم إلى قائمة عملائنا المتميزين</h3>
+      <p class="text-gray-300 mb-6">احجز مكانك الآن واستمتع بتجربة تصوير احترافية لا تُنسى</p><a href="https://wa.me/201201260040?text=مرحباً، أريد الاستفسار عن المواعيد المتاحة" target="_blank" rel="noopener noreferrer" class="block w-full bg-green-500 hover:bg-green-600 text-white py-4 rounded-full font-bold text-lg transition-all"> 📅 استعلم عن المواعيد المتاحة </a>
+     </div>
+    </div>
+   </div><!-- Inquiry Modal -->
+   <div id="inquiryModal" class="hidden fixed inset-0 z-[9999] flex items-center justify-center p-4">
+    <div class="modal-overlay absolute inset-0" onclick="closeInquiryModal()"></div>
+    <div class="relative bg-gradient-to-br from-[#1a1a2e] to-[#0f0f1a] rounded-3xl p-8 max-w-md w-full animate-fadeInScale border border-[#d4af37]/30">
+     <button onclick="closeInquiryModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg></button>
+     <div class="text-center mb-6">
+      <div class="text-5xl mb-4">
+       📸
+      </div>
+      <h3 class="text-2xl font-bold text-gold">استفسار عن الخدمات</h3>
+     </div>
+     <div class="space-y-4">
+      <div>
+       <label class="block text-[#d4af37] mb-2 font-bold">اختر نوع الخدمة</label> <select id="inquiryType" class="w-full bg-[#0a0a12] border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-[#d4af37] transition-all"> <option value="صور سيشن">📸 صور سيشن</option> <option value="صور خطوبة">💍 صور خطوبة</option> <option value="صور استوديو">🏛️ صور استوديو</option> <option value="تصوير فيديو">🎬 تصوير فيديو</option> </select>
+      </div>
+      <div>
+       <label class="block text-[#d4af37] mb-2 font-bold">تاريخ المناسبة</label> <input type="date" id="inquiryDate" class="w-full bg-[#0a0a12] border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-[#d4af37] transition-all">
+      </div><button onclick="sendInquiry()" class="w-full bg-green-500 hover:bg-green-600 text-white py-4 rounded-full font-bold text-lg transition-all"> 💬 إرسال الاستفسار عبر واتساب </button>
+     </div>
+    </div>
+   </div><!-- Copy Notification -->
+   <div id="copyNotification" class="copy-notification hidden">
+    ✓ تم نسخ الرقم بنجاح!
+   </div><!-- Lightbox Modal -->
+   <div id="lightbox" class="lightbox">
+    <div class="lightbox-backdrop" onclick="closeLightbox()"></div>
+    <div class="lightbox-content">
+     <button onclick="closeLightbox()" class="lightbox-close">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg></button> <img id="lightboxImage" src="" alt="Full size image" class="lightbox-image" loading="lazy">
+    </div>
+   </div>
+  </div>
+  <script>
+        // Default configuration
+        const defaultConfig = {
+            site_title: 'Mrakby Visuals',
+            hero_description: 'نؤمن أن الصورة المثالية هي التي تجعلك تشعر باللحظة وكأنها تحدث الآن. متخصصون في توثيق أجمل ذكرياتكم',
+            primary_color: '#d4af37',
+            secondary_color: '#1a1a2e',
+            text_color: '#ffffff',
+            accent_color: '#f4e4bc',
+            background_color: '#0a0a12'
+        };
+
+        let config = { ...defaultConfig };
+        let currentSlide = 0;
+        let slideInterval;
+        let bookings = [];
+        let slideshowImages = [];
+        let slideshowCurrentIndex = 0;
+
+        // Location data
+        const locationData = {
+            studio: { name: 'الاستوديو', link: 'https://maps.app.goo.gl/5NYqKf4qxRXExfHw8' },
+            amazon: { name: 'أمازون', link: 'https://maps.app.goo.gl/B4VjGsA9P1gNG3dHA' },
+            greenisland: { name: 'جرين أي لاند', link: 'https://maps.app.goo.gl/Cp6s16YWAPzarZYb6' },
+            wave: { name: 'ويف', link: 'https://maps.app.goo.gl/LtUtkf7JmBrrW7z69' },
+            vibes: { name: 'فايبس', link: 'https://maps.app.goo.gl/kv51fYxT4qyrHWhc8' }
+        };
+
+        // Gallery data
+        const galleryData = {
+            wedding: {
+                title: '👰 سيشن الزفاف',
+                items: [
+                    { 
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhIcVXWDcNWmF0Zp03coPn9kXK9ci5B9SY_9OZXBpDUQmc1e1EkJMFascSQstx6aPijckrUsb-29ljpI2ltagPrcp5huQ_nNZKVVYFDHJbFpB8xormFTsoN1qH08g68Q-vNpWjrVUXMy4vf-QMQcl9m-N51GugdLtXPn8Bi6cxs61M313z-UVchFTJdyoI/w458-h640/50--------70.jpg',
+                        title: 'العروسة الجميلة'
+                    },
+                    { 
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiCnrCDiZi6lkv19PT4FMd4ROtjED-pWWqv5X1FqZiHwsqtAaykkTEnvhpkpS6c9lZrm8Jmf2wVaRI45x9BwAAsCrOmT_ZjryGiDURfduAYchHB7iVb7hT4umwWRvi5WMp6yOaB0XAWgvV0NyVOje9OVP7tWAZAjC0w-7eViuqRZkUzjX3J-UhWHOB60Cg/w426-h640/Mrakby-9040%20copy.jpg',
+                        title: 'لحظة رومانسية'
+                    },
+                    { 
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiahVvxut5S0I8Bkkoyl5gRNpAIGCAI1OWx9aJL1cIcpdhhWt6NxsTqtK_-NBGhxW4WBc6tvzu-wUscrGWtaMa0-nG8dUQsvrdocMYhVQbOlZh6g-sCJJJ1x51K6UxVrKMezwAbYaDFlxZg0MUDgAzWwhHKTFQqrrUtBJlIORBuD9p23D-9se68Ub4qM24/w640-h426/Mrakby-33323%20copy.jpg',
+                        title: 'التفاصيل الجميلة'
+                    },
+                    { 
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgRyE87oQvouOyhrea0GWEHl-Zd1YiyZYEIqbQH5nsb5Zr9hepO1TfBuzpoloG8-0DRJWgsZjZvxAANzpirZA3QqjuLQUH97hWn4meduv6D9uUjA3vGftSPpMQVgS2AqLNdr5t5-cvwAtDop8pJrrQyf6uZFNivx6DeqZXV3a3Hnyy8-BVyMmhDxgGaCQg/w426-h640/Mrakby-33549%20copy.jpg',
+                        title: 'ذكريات خالدة'
+                    },
+                    { 
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgsEeKv_2oNllbAxiKMSQzR_JEIbMfDk0pCmoTEgXGde4WretfAttrRP9cJ0sBVMz4WYr97PpcJGGpCQ8CRPJlE2YX06kBc8kI_1aMaxNrIH0s255xV8JeND_Ga9G2OhVdDLzUMpajJlCCsIEmJxsG2NtCG4S5DqhueRlYQC2XMsWLJ57D-igO9cldI1jw/w426-h640/Mrakby-20287%20copy.jpg',
+                        title: 'أناقة العريس والعروس'
+                    },
+                    { 
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjU5xVGXJTXfECBDxKYByDIb0mHJYhTtZeEuIbv69vsGbj1E5RM7pUAbRk4BTHyeIeBsQcJrX1sku-2k_fARPVL2H4Bo_nx6iFI5zuS2PDGvqh53xx-O4S1PmPmBDjl6GZgL-MhV165DXyNFHoQ-397HhwQjBvCXsAkgjQ-8KAQkQwWEymAQFI-GAauXb0/w640-h426/DSC_5842-2%20copy.jpg',
+                        title: 'لحظة سعادة'
+                    }
+                ]
+            },
+            engagement: {
+                title: '💍 سيشن الخطوبة',
+                items: [
+                    { 
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEglEf7YuNrdeGl1sJ8VvqM959UCTVpiNQq2jQw9OqfnbCiGQxbaz0v1U65lckta14KGJ5Hb-lA_iGZwLMtptqjY60rg7H3Xf9wLEzIINeap_bVuxf1ryKI5uM6ias7xTQBUKSpRn15rAhjn0WYx2kMNw_tz7USR0m1JSxJCe9Qit0WXT7szrl-l878cs34/w426-h640/Mrakby-27334%20copy.jpg',
+                        title: 'لحظة الحب'
+                    },
+                    { 
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhK9YTTXQqM0pVMJUTBQyvnbwnyeTBRKcvlYko7ljxO3eVOGcdUrIpponNwNZG1K6NQ38Ef_fhNfGEFmHwJZq2XgPHxCBsg_w9wq7XCNaRRA7YEugqdqgC5A0Ihzanc_YQkXmY26j_gqz-X63_JF7s2_lWZVYIXMstvTKfEAEf3ptCJoBxtkLiief_iZdU/w640-h426/Mrakby-27330%20copy.jpg',
+                        title: 'روح الخطوبة'
+                    },
+                    { 
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEja-hcxtENqnIZl8f-7Ghb39g8LJca19Vpe93LyXfW19cn5AquC_TpO2xlOahedbyVOF_qaOa4SGWUPOddFB2-OXVUM0NeOZkwBUK8n5H-HzoVprkDjCFa_2OfgMpezKFUW7DSgaZGsHHjkzG_-QfyNnhQwdUWvdyJ7SUQbaXhJtyNFbu172bN5lXhIGms/w640-h426/Mrakby-18887%20copy.jpg',
+                        title: 'ابتسامة الفرح'
+                    },
+                    { 
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEieE4Z-IW6PtfG4SnI6pxhDeLlM_u6V1XNys0pc8dLOlq5QbXc-KoOztp08NqgUfL4L7_i6u44foVQXyXWC-WKjY2VfbA29oBO8xCi9D8ah7HnAhX6lozTM_Dk0AOn8YONpSVQPdbMjPYNGTk51dYpw6BZ4DU-wF-bU4as6CjVS4g43PLyp4CYshuVmkaI/w426-h640/Mrakby-18872%20copy.jpg',
+                        title: 'لحظة حميمية'
+                    },
+                    { 
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg44ggaykvAAKDD6JIvgdVkqz5dZf0PIT6hwHoe_BlkzYVF65_ZbUwEPw2nwkLqbKj18XsdjxR9yas3pyknLolffWXPL4pT0axwZ8Zn0T2wduGWIQ7oyehycMxmkNxefjIZUoyd78kZVkvbbzSS96E8j9UfcF4H-RUk-HMBCGI31KtDGlueSP5Axq89AYk/w640-h426/Mrakby-18873%20copy.jpg',
+                        title: 'تفاصيل جميلة'
+                    },
+                    { 
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjfFX2KiMYcMEf_XOIGS0OLCclpqWirEFFzGpXRXwiwBQeQI7m0XhSokfvxxdGrB-5m9cziyp7yz05T8lXqzhWvOKOmQn6_Ru58bLZhIoxbSb74yyO7mLXHEXhh1SobQ29warvfigqdPQKMXpTdyBjWbQk52DK95bcMe32kQ5SmMao5pXHHx8XLdGtftkE/w426-h640/Mrakby-27279%20copy.jpg',
+                        title: 'ذكريات لا تُنسى'
+                    }
+                ]
+            },
+            casual: {
+                title: '📷 سيشن كاجوال',
+                items: [
+                    { 
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj-vtVXu4QgS-1G4kVSOegYv0h87SdVqH6zr6eKJeRlVd9EEstf2hk21oUpbSfIHpmSsKHk2yfIq5_SMw1uFIMf9w88AkTdvoixhLrd-JO8H-YRko91GFH6ELdCQF7MxiGMIYp0vbDcf7Dr-Eb29NLBmE-voIoh7Sf5n90p1E_QVRr05dyx2asqyznM5Tc/w426-h640/Mrakby-10732%20copy.jpg',
+                        title: 'صور طبيعية'
+                    },
+                    { 
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh2QjWfu5_DVXpAoUupE1tC2F7WIgyrsexkRPsbWsJfYIZfI5XfmPQksBRGneI2ety_DurxUhL6QZB5y9WJkRrashIcDWlYFSMLDEVobEunlEVrofPGVXGMBu-DXBL2-esP460eRj3HHUXxfBdca8U5Ic5kv8RiRiz2fmTyJpdHPyIEBn5UitS-Xs8Ttns/w426-h640/Mrakby-10797%20copy.jpg',
+                        title: 'لحظات عفوية'
+                    },
+                    { 
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg5CvLiLFil4ciCXuqxiBojkz-OYAX7e5Pj-ngX3eE2TdN7JFsX-lPv0ODPfBSXKwWA78iOtkGuP9K8-oW2ScH95p9kSY13mMUviDOads-A37A2o4V77DfBa3jXgCytWCCJS8roJ3rxHdGydCNzwecBOpf7Vv74f0Cwl8raP-GnBcZW6P1D2GJzIvPLgIk/w426-h640/Mrakby-10839%20copy.jpg',
+                        title: 'إبداع فني'
+                    },
+                    { 
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEifBKIScxJfdmyVQS-bq1IzUJA4LMJzH_BJZgGKXIFXgc73yDNUN3YYclW6MSfHNzeVpgDXgdwoi_YODz6tdoSkit02HjPSH-YOD3kogbbO1VXancWQeCG2Z0TS8UqdJUgBgax77Z68P6lQST4u_AeD1E2o66nMi8RuXwPxS8n4LG_sx8I9QfPXxL7T1oQ/w426-h640/Mrakby-13745%20copy.jpg',
+                        title: 'ابتسامة صادقة'
+                    },
+                    { 
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgfdcAS4tMEDI_kDxH4lIkEZRBDHWIZGIt0CQlCOvlhST9SmPjwmqoj_dIwYn9TO4SOoYdyIOoNv9z9Rqn8xHbBaShZpbILbYfszQ8B5OBxmExdp_ttmERwx_hfGzYwyrzFVsltme20hLC8X-rRMY5xJNyNzMaZBSn9rJL3OSncJHpy_QXiZEeT6Dr8THQ/w426-h640/Mrakby-13775%20copy.jpg',
+                        title: 'لحظات جميلة'
+                    },
+                    { 
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgd5GZvP-9ejuzGVjFdpOGAM65gD0IBnsgLOYXg64_njL_dBmgw3WxsK6jmpx__2dp0STgE1s3lRHIfp8VQbTJsswWOLovVJs7oKemg6dfr3vWeQqxxUTe9Apa7r2EA3slRqrD4o3yvtoONcHD_0g9EowPG3jtrdKTn2d-vJPo1mBgmWXqC8f1MMmxgrLg/w426-h640/Mrakby-766%20copy%202.jpg',
+                        title: 'ذكريات أبدية'
+                    }
+                ]
+            }
+        };
+
+        // Initialize Element SDK
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange: async (newConfig) => {
+                    config = { ...defaultConfig, ...newConfig };
+                    updateUI();
+                },
+                mapToCapabilities: (cfg) => ({
+                    recolorables: [
+                        {
+                            get: () => cfg.background_color || defaultConfig.background_color,
+                            set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); }
+                        },
+                        {
+                            get: () => cfg.secondary_color || defaultConfig.secondary_color,
+                            set: (v) => { config.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); }
+                        },
+                        {
+                            get: () => cfg.text_color || defaultConfig.text_color,
+                            set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+                        },
+                        {
+                            get: () => cfg.primary_color || defaultConfig.primary_color,
+                            set: (v) => { config.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); }
+                        },
+                        {
+                            get: () => cfg.accent_color || defaultConfig.accent_color,
+                            set: (v) => { config.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); }
+                        }
+                    ],
+                    borderables: [],
+                    fontEditable: undefined,
+                    fontSizeable: undefined
+                }),
+                mapToEditPanelValues: (cfg) => new Map([
+                    ['site_title', cfg.site_title || defaultConfig.site_title],
+                    ['hero_description', cfg.hero_description || defaultConfig.hero_description]
+                ])
+            });
+        }
+
+        // Initialize Data SDK
+        const dataHandler = {
+            onDataChanged(data) {
+                bookings = data;
+                console.log('Bookings updated:', bookings.length);
+            }
+        };
+
+        if (window.dataSdk) {
+            window.dataSdk.init(dataHandler);
+        }
+
+        function updateUI() {
+            const siteTitle = document.getElementById('site-title');
+            const heroDesc = document.getElementById('hero-description');
+            
+            if (siteTitle) siteTitle.textContent = config.site_title || defaultConfig.site_title;
+            if (heroDesc) heroDesc.innerHTML = (config.hero_description || defaultConfig.hero_description).replace(/\n/g, '<br>');
+        }
+
+        function navigateToGallery() {
+            showPage('gallery');
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+
+        // Page Navigation
+        function showPage(pageName) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            
+            if (pageName === 'home') {
+                document.getElementById('homePage').classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (pageName === 'about') {
+                document.getElementById('aboutPage').classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (pageName === 'gallery') {
+                document.getElementById('galleryPage').classList.add('active');
+                document.getElementById('galleryContent').classList.add('hidden');
+                document.getElementById('videosContent').classList.add('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // Scroll to section
+        function scrollToSection(sectionId) {
+            showPage('home');
+            setTimeout(() => {
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+        }
+
+        function scrollToContactOnHome() {
+            showPage('home');
+            setTimeout(() => {
+                const element = document.getElementById('contact');
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+        }
+
+        // Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Slideshow
+        function startSlideshow() {
+            slideInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % 4;
+                updateSlider();
+            }, 4000);
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlider();
+            clearInterval(slideInterval);
+            startSlideshow();
+        }
+
+        function updateSlider() {
+            const track = document.getElementById('sliderTrack');
+            track.style.transform = `translateX(${currentSlide * 100}%)`;
+            
+            document.querySelectorAll('.slide-dot').forEach((dot, i) => {
+                dot.classList.toggle('bg-[#d4af37]', i === currentSlide);
+                dot.classList.toggle('bg-white/30', i !== currentSlide);
+            });
+        }
+
+        // New Slideshow Functions
+        function initializeSlideshow() {
+            collectSlideshowImages();
+            renderSlideshow();
+            startSlideshowAutoplay();
+        }
+
+        function getRandomImageFromCategory() {
+            const categories = Object.keys(galleryData).filter(key => key !== 'videos');
+            const randomCategory = categories[Math.floor(Math.random() * categories.length)];
+            const categoryData = galleryData[randomCategory];
+            
+            if (categoryData.items && categoryData.items.length > 0) {
+                const randomIndex = Math.floor(Math.random() * categoryData.items.length);
+                return categoryData.items[randomIndex].image;
+            }
+            
+            return 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhIcVXWDcNWmF0Zp03coPn9kXK9ci5B9SY_9OZXBpDUQmc1e1EkJMFascSQstx6aPijckrUsb-29ljpI2ltagPrcp5huQ_nNZKVVYFDHJbFpB8xormFTsoN1qH08g68Q-vNpWjrVUXMy4vf-QMQcl9m-N51GugdLtXPn8Bi6cxs61M313z-UVchFTJdyoI/w458-h640/50--------70.jpg';
+        }
+
+        function collectSlideshowImages() {
+            slideshowImages = [getRandomImageFromCategory()];
+        }
+
+        function renderSlideshow() {
+            const track = document.getElementById('slideshowTrack');
+            const dotsContainer = document.getElementById('slideDots');
+            
+            track.innerHTML = '';
+            dotsContainer.innerHTML = '';
+            
+            const slide = document.createElement('div');
+            slide.className = 'slide';
+            slide.style.minWidth = '100%';
+            slide.style.width = '100%';
+            slide.style.height = '100%';
+            slide.style.position = 'relative';
+            slide.innerHTML = `
+                <img src="${slideshowImages[0]}" alt="Slideshow" 
+                     style="width: 100%; height: 100%; object-fit: cover; display: block;"
+                     loading="lazy"
+                     onerror="this.style.background='linear-gradient(135deg, #d4af37, #f4e4bc)'; this.parentElement.style.background='linear-gradient(135deg, #d4af37, #f4e4bc)';">
+            `;
+            track.appendChild(slide);
+            
+            const dot = document.createElement('button');
+            dot.className = 'slide-dot w-3 h-3 rounded-full transition-all bg-[#d4af37] hover:bg-[#d4af37]';
+            dot.type = 'button';
+            dotsContainer.appendChild(dot);
+        }
+
+        function startSlideshowAutoplay() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(() => {
+                const newImage = getRandomImageFromCategory();
+                slideshowImages[0] = newImage;
+                updateSlideshowImage();
+            }, 10000);
+        }
+
+        function updateSlideshowImage() {
+            const track = document.getElementById('slideshowTrack');
+            const img = track.querySelector('img');
+            if (img) {
+                img.src = slideshowImages[0];
+            }
+        }
+
+        function nextSlide() {
+            const newImage = getRandomImageFromCategory();
+            slideshowImages[0] = newImage;
+            updateSlideshowImage();
+            clearInterval(slideInterval);
+            startSlideshowAutoplay();
+        }
+
+        function prevSlide() {
+            const newImage = getRandomImageFromCategory();
+            slideshowImages[0] = newImage;
+            updateSlideshowImage();
+            clearInterval(slideInterval);
+            startSlideshowAutoplay();
+        }
+
+        // Location Selection
+        document.getElementById('locationSelect').addEventListener('change', function() {
+            const value = this.value;
+            const linksDiv = document.getElementById('locationLinks');
+            const linkElement = document.getElementById('locationLink');
+            const homePicker = document.getElementById('homeLocationPicker');
+            
+            if (value === 'home') {
+                linksDiv.classList.add('hidden');
+                homePicker.classList.remove('hidden');
+            } else if (!value) {
+                linksDiv.classList.add('hidden');
+                homePicker.classList.add('hidden');
+            } else if (locationData[value]) {
+                linksDiv.classList.remove('hidden');
+                homePicker.classList.add('hidden');
+                linkElement.href = locationData[value].link;
+            } else {
+                linksDiv.classList.add('hidden');
+                homePicker.classList.add('hidden');
+            }
+        });
+
+        function openMapPicker() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        const link = `https://www.google.com/maps?q=${lat},${lng}`;
+                        document.getElementById('homeLocation').value = link;
+                        showNotification('تم تحديد موقعك بنجاح!');
+                    },
+                    () => {
+                        showNotification('لم نتمكن من تحديد موقعك');
+                    }
+                );
+            }
+        }
+
+        // Booking Form
+        document.getElementById('bookingForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const formMessage = document.getElementById('formMessage');
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="animate-pulse">جاري الإرسال...</span>';
+            
+            const groomName = document.getElementById('groomName').value;
+            const brideName = document.getElementById('brideName').value;
+            const eventDate = document.getElementById('eventDate').value;
+            const address = document.getElementById('address').value;
+            const phone = document.getElementById('phone').value;
+            const bookingType = document.getElementById('bookingType').value;
+            const locationValue = document.getElementById('locationSelect').value;
+            const notes = document.getElementById('notes').value;
+            const venueName = document.getElementById('venueName').value;
+            
+            const bookingData = {
+                groom_name: groomName,
+                bride_name: brideName,
+                event_date: eventDate,
+                address: address,
+                phone: phone,
+                booking_type: bookingType,
+                location: locationValue,
+                location_link: document.getElementById('homeLocation').value || (locationData[locationValue]?.link || ''),
+                venue_name: venueName,
+                notes: notes,
+                created_at: new Date().toISOString()
+            };
+            
+            if (window.dataSdk) {
+                if (bookings.length >= 999) {
+                    formMessage.className = 'mt-6 p-4 rounded-xl text-center bg-red-500/20 text-red-400';
+                    formMessage.textContent = 'عذراً، تم الوصول للحد الأقصى من الحجوزات';
+                    formMessage.classList.remove('hidden');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '✨ تأكيد الحجز';
+                    return;
+                }
+                
+                const result = await window.dataSdk.create(bookingData);
+                
+                if (result.isOk) {
+                    const whatsappMessage = encodeURIComponent(
+                        `مرحباً! 🎉\n\n` +
+                        `تم استلام طلب حجزك بنجاح!\n\n` +
+                        `📋 *تفاصيل الحجز:*\n` +
+                        `👰 العروسة: ${brideName}\n` +
+                        `🤵 العريس: ${groomName}\n` +
+                        `📅 التاريخ: ${eventDate}\n` +
+                        `📍 الموقع: ${locationValue === 'home' ? 'في المنزل' : locationValue}\n` +
+                        (venueName ? `🏛️ اسم القاعة/الكافيه: ${venueName}\n` : '') +
+                        `📷 النوع: ${bookingType}\n` +
+                        `📞 الهاتف: ${phone}\n` +
+                        (address ? `📌 العنوان: ${address}\n` : '') +
+                        (notes ? `📝 ملاحظات: ${notes}\n` : '') +
+                        `\nسيتم التواصل معك قريباً لتأكيد الحجز والتفاصيل الإضافية.\n\n` +
+                        `شكراً لثقتك بـ Mrakby Visuals ✨`
+                    );
+                    
+                    window.open(`https://wa.me/201201260040?text=${whatsappMessage}`, '_blank');
+                    
+                    formMessage.className = 'mt-6 p-4 rounded-xl text-center bg-green-500/20 text-green-400';
+                    formMessage.textContent = '✓ تم إرسال طلب الحجز بنجاح! سيتم فتح واتساب لتأكيد الحجز';
+                    formMessage.classList.remove('hidden');
+                    this.reset();
+                    
+                    document.getElementById('locationSelect').value = '';
+                    document.getElementById('locationLinks').classList.add('hidden');
+                    document.getElementById('homeLocationPicker').classList.add('hidden');
+                } else {
+                    formMessage.className = 'mt-6 p-4 rounded-xl text-center bg-red-500/20 text-red-400';
+                    formMessage.textContent = 'حدث خطأ، يرجى المحاولة مرة أخرى';
+                    formMessage.classList.remove('hidden');
+                }
+            } else {
+                const whatsappMessage = encodeURIComponent(
+                    `مرحباً! 🎉\n\n` +
+                    `حجز جديد!\n\n` +
+                    `📋 *تفاصيل الحجز:*\n` +
+                    `👰 العروسة: ${brideName}\n` +
+                    `🤵 العريس: ${groomName}\n` +
+                    `📅 التاريخ: ${eventDate}\n` +
+                    `📍 الموقع: ${locationValue === 'home' ? 'في المنزل' : locationValue}\n` +
+                    (venueName ? `🏛️ اسم القاعة/الكافيه: ${venueName}\n` : '') +
+                    `📷 النوع: ${bookingType}\n` +
+                    `📞 الهاتف: ${phone}\n` +
+                    (address ? `📌 العنوان: ${address}\n` : '') +
+                    (notes ? `📝 ملاحظات: ${notes}\n` : '')
+                );
+                
+                window.open(`https://wa.me/201201260040?text=${whatsappMessage}`, '_blank');
+                
+                formMessage.className = 'mt-6 p-4 rounded-xl text-center bg-green-500/20 text-green-400';
+                formMessage.textContent = '✓ تم إرسال طلب الحجز بنجاح!';
+                formMessage.classList.remove('hidden');
+                this.reset();
+                
+                document.getElementById('locationSelect').value = '';
+                document.getElementById('locationLinks').classList.add('hidden');
+                document.getElementById('homeLocationPicker').classList.add('hidden');
+            }
+            
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '✨ تأكيد الحجز';
+            
+            setTimeout(() => {
+                formMessage.classList.add('hidden');
+            }, 5000);
+        });
+
+        function openBookingWithType(type) {
+            document.getElementById('bookingType').value = type;
+            document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Gallery Functions
+        let currentCategoryIndex = 0;
+        const categories = ['wedding', 'engagement', 'casual', 'videos'];
+
+        function nextCategory() {
+            currentCategoryIndex = (currentCategoryIndex + 1) % categories.length;
+            showGalleryCategory(categories[currentCategoryIndex]);
+        }
+
+        function previousCategory() {
+            currentCategoryIndex = (currentCategoryIndex - 1 + categories.length) % categories.length;
+            showGalleryCategory(categories[currentCategoryIndex]);
+        }
+
+        function showGalleryCategory(category) {
+            const content = document.getElementById('galleryContent');
+            const videos = document.getElementById('videosContent');
+            const title = document.getElementById('galleryTitle');
+            const grid = document.getElementById('galleryGrid');
+            
+            const categoryIndex = categories.indexOf(category);
+            if (categoryIndex !== -1) {
+                currentCategoryIndex = categoryIndex;
+            }
+            
+            updateCategoryButtons(category);
+            
+            if (category === 'videos') {
+                content.classList.add('hidden');
+                videos.classList.remove('hidden');
+            } else {
+                videos.classList.add('hidden');
+                content.classList.remove('hidden');
+                
+                const data = galleryData[category];
+                title.innerHTML = `<h3 class="text-3xl font-bold text-gold">${data.title}</h3><p class="text-gray-400 mt-2">اضغط على أي صورة لفتحها بحجمها الطبيعي</p>`;
+                
+                grid.innerHTML = data.items.map((item, index) => {
+                    if (item.image) {
+                        const bookingType = category === 'wedding' ? 'تصوير سيشن زفاف' : category === 'engagement' ? 'تصوير سيشن خطوبه' : 'سيشن تصوير';
+                        const itemId = `gallery-item-${category}-${index}`;
+                        
+                        return `
+                            <div class="gallery-item bg-gradient-to-br from-[#1a1a2e] to-[#0f0f1a] border border-gray-800 relative overflow-hidden group cursor-pointer"
+                                 data-image="${item.image}"
+                                 data-booking-type="${bookingType}"
+                                 data-item-id="${itemId}"
+                                 onclick="handleGalleryImageClick(this)">
+                                <img src="${item.image}" alt="${item.title}" loading="lazy" 
+                                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                     onerror="this.style.background='linear-gradient(135deg, #d4af37, #f4e4bc)'; this.style.display='none';">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-end p-4">
+                                    <h4 class="text-lg font-bold text-white mb-2 text-center">${item.title}</h4>
+                                    <button type="button" class="bg-[#d4af37] hover:bg-[#f4e4bc] text-black px-4 py-2 rounded-full text-sm font-bold transition-all gallery-request-btn"
+                                            data-booking-type="${bookingType}"
+                                            onclick="handleBookingClick(event, this)">
+                                        اطلب الآن
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }).join('');
+            }
+        }
+        
+        function updateCategoryButtons(activeCategory) {
+            const buttons = document.querySelectorAll('.gallery-category-btn');
+            buttons.forEach((btn, index) => {
+                const category = categories[index];
+                if (category === activeCategory) {
+                    btn.classList.add('ring-2', 'ring-[#d4af37]', 'bg-[#d4af37]/20');
+                } else {
+                    btn.classList.remove('ring-2', 'ring-[#d4af37]', 'bg-[#d4af37]/20');
+                }
+            });
+        }
+
+        function openLightbox(imageSrc) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+            lightboxImage.src = imageSrc;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function handleGalleryImageClick(element) {
+            const imageSrc = element.getAttribute('data-image');
+            openLightbox(imageSrc);
+        }
+
+        function handleBookingClick(event, button) {
+            event.stopPropagation();
+            const bookingType = button.getAttribute('data-booking-type');
+            const message = encodeURIComponent(`مرحباً، أريد الحجز من نوع: ${bookingType}`);
+            window.open(`https://wa.me/201201260040?text=${message}`, '_blank');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+
+        // Modal Functions
+        function openWhatsAppModal() {
+            document.getElementById('whatsappModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeWhatsAppModal() {
+            document.getElementById('whatsappModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function openInquiryModal() {
+            document.getElementById('inquiryModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeInquiryModal() {
+            document.getElementById('inquiryModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function sendInquiry() {
+            const type = document.getElementById('inquiryType').value;
+            const date = document.getElementById('inquiryDate').value;
+            const message = encodeURIComponent(`مرحباً، أريد الاستفسار عن: ${type}${date ? `\nتاريخ المناسبة: ${date}` : ''}`);
+            window.open(`https://wa.me/201201260040?text=${message}`, '_blank');
+            closeInquiryModal();
+        }
+
+        function inquireAboutOffers() {
+            const message = encodeURIComponent(`مرحباً! 👋\n\nأريد الاستفسار عن آخر العروض والباقات المتاحة والأسعار الحالية.\n\nشكراً 😊`);
+            window.open(`https://wa.me/201201260040?text=${message}`, '_blank');
+        }
+
+        function copyVodafoneNumber() {
+            navigator.clipboard.writeText('01126810107').then(() => {
+                showNotification('✓ تم نسخ الرقم بنجاح!');
+            });
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('copyNotification');
+            notification.textContent = message;
+            notification.classList.remove('hidden');
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 3000);
+        }
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-[#0a0a12]/90');
+            } else {
+                navbar.classList.remove('bg-[#0a0a12]/90');
+            }
+        });
+
+        updateUI();
+        startSlideshow();
+        initializeSlideshow();
+        showGalleryCategory('wedding');
+        
+        // Language Toggle
+        function toggleLanguage() {
+            document.querySelectorAll('.ar-text').forEach(el => el.classList.toggle('hidden'));
+            document.querySelectorAll('.en-text').forEach(el => el.classList.toggle('hidden'));
+            
+            // Toggle RTL/LTR
+            const html = document.documentElement;
+            html.dir = html.dir === 'rtl' ? 'ltr' : 'rtl';
+            html.lang = html.lang === 'ar' ? 'en' : 'ar';
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d6d8fd9535e7e8b',t:'MTc3MjU5MjUwNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
